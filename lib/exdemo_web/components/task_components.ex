@@ -8,15 +8,21 @@ defmodule ExdemoWeb.TaskComponents do
       <div class="grid grid-cols-4 gap-5">
         <.label label="Tasks" text={@control.tasks} />
         <.label label="" text={} />
-        <button class="w-full border border-green-500 text-green-800 rounded-md px-6 py-auto h-10 hover:bg-green-200">+ Node</button>
-        <button class="w-full border border-green-500 text-green-800 rounded-md px-6 py-auto h-10 hover:bg-green-200">- Node</button>
-        <.label label="Pending" text={@control.tasks - @control.success - @control.failed - @control.running} />
+        <button class="w-full border border-green-500 text-green-800 rounded-md px-6 py-auto h-10 hover:bg-green-200">
+          + Node
+        </button>
+        <button class="w-full border border-green-500 text-green-800 rounded-md px-6 py-auto h-10 hover:bg-green-200">
+          - Node
+        </button>
+        <.label
+          label="Pending"
+          text={@control.tasks - @control.success - @control.failed - @control.running}
+        />
         <.label label="Running" text={@control.running} />
         <.label label="Nodes" text={@control.nodes} />
         <.label label="Users" text={@control.users} />
         <.label label="Success" text={@control.success} />
         <.label label="Failed" text={@control.failed} />
-
       </div>
     </div>
     """
@@ -39,8 +45,14 @@ defmodule ExdemoWeb.TaskComponents do
         </div>
         <div class="basis-1/2 flex flex-col gap-2">
           <%= if @current_user == @user.name do %>
-            <input class="rounded-md border-green-500 focus:border-green-500 focus:ring-2 focus:ring-green-500 h-10" type="text" placeholder="Number of tasks to execute">
-            <button class="border border-green-500 text-green-800 rounded-md px-6 py-auto h-10 hover:bg-green-200">Execute</button>
+            <input
+              class="rounded-md border-green-500 focus:border-green-500 focus:ring-2 focus:ring-green-500 h-10"
+              type="text"
+              placeholder="Number of tasks to execute"
+            />
+            <button class="border border-green-500 text-green-800 rounded-md px-6 py-auto h-10 hover:bg-green-200">
+              Execute
+            </button>
           <% end %>
         </div>
       </div>
@@ -50,10 +62,10 @@ defmodule ExdemoWeb.TaskComponents do
 
   def label(assigns) do
     ~H"""
-      <div class="relative w-16">
-        <span class="text-[0.7rem] absolute -top-3 left-0 text-slate-500">{@label}</span>
-        <span class="font-bold">{@text}</span>
-      </div>
+    <div class="relative w-16">
+      <span class="text-[0.7rem] absolute -top-3 left-0 text-slate-500">{@label}</span>
+      <span class="font-bold">{@text}</span>
+    </div>
     """
   end
 end

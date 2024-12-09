@@ -1,7 +1,9 @@
 defmodule DemoTask do
   def run do
-    total_time = Enum.random(5..15) * 1000  # Randomize between 5 and 10 seconds
-    update_interval = div(total_time, 4)         # Divide total time by 4 for updates
+    # Randomize between 5 and 10 seconds
+    total_time = Enum.random(5..15) * 1000
+    # Divide total time by 4 for updates
+    update_interval = div(total_time, 4)
 
     # Start the task asynchronously
     Task.async(fn -> perform_task(total_time, update_interval) end)
@@ -15,7 +17,9 @@ defmodule DemoTask do
     |> Enum.each(fn i ->
       :timer.sleep(update_interval)
       # Send an update message each quarter
-      IO.puts("Update #{i}: Task is in progress... (Time elapsed: #{i * update_interval / 1000} seconds)")
+      IO.puts(
+        "Update #{i}: Task is in progress... (Time elapsed: #{i * update_interval / 1000} seconds)"
+      )
     end)
 
     # Final completion message
