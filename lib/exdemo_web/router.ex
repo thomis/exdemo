@@ -17,7 +17,8 @@ defmodule ExdemoWeb.Router do
   scope "/", ExdemoWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    # get "/", PageController, :home
+    live "/", TaskLive, :index
   end
 
   # Other scopes may use custom stacks.
@@ -34,7 +35,7 @@ defmodule ExdemoWeb.Router do
     # as long as you are also using SSL (which you should anyway).
     import Phoenix.LiveDashboard.Router
 
-    scope "/dev" do
+    scope "/" do
       pipe_through :browser
 
       live_dashboard "/dashboard", metrics: ExdemoWeb.Telemetry
