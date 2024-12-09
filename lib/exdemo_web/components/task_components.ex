@@ -3,8 +3,8 @@ defmodule ExdemoWeb.TaskComponents do
 
   def control(assigns) do
     ~H"""
-    <div class="border rounded-md shadow-lg w-auto h-72 bg-blue-100 p-4 flex flex-col gap-5">
-      <div class="text-lg">Control Panel</div>
+    <div class="border rounded-md shadow-lg w-auto h-72 bg-blue-100 hover:bg-blue-200 transition duration-200 p-4 flex flex-col gap-5">
+      <div class="text-lg font-bold">Control Panel</div>
       <div class="grid grid-cols-4 gap-5">
         <.label label="Tasks" text={@control.tasks} />
         <.label label="" text={} />
@@ -24,8 +24,8 @@ defmodule ExdemoWeb.TaskComponents do
 
   def user(assigns) do
     ~H"""
-    <div class="border rounded-md shadow-lg w-auto h-72 p-4">
-      <div class="text-lg">{@user.name} @ node N</div>
+    <div class="border rounded-md shadow-lg hover:bg-slate-100 transition duration-200 w-auto h-72 p-4">
+      <div class="text-lg font-bold">{@user.name} @ node N</div>
       <div class="flex flex-row gap-5">
         <div class="basis-1/2 flex flex-col gap-4">
           <div class="grid grid-cols-2 gap-5 mt-5">
