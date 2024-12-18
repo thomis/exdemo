@@ -2,7 +2,9 @@
   <div class="flex items-center justify-between">
     <div class="flex items-center text-lg">
       <a class="flex gap-2 mr-5" href="/">
-        <img src={~p"/images/icon.svg"} /> ExDemo
+        <img class="h-auto" src={~p"/images/icon.svg"} /><span class="hidden sm:block">
+          ExDemo
+        </span>
       </a>
       <a class="px-5 h-12 hover:bg-slate-300 flex items-center" href={~p"/"}>
         Monitor
@@ -46,7 +48,7 @@
         </svg>
       </a>
       <%= if @current_user do %>
-        <span class="mx-5">{@current_user}</span>
+        <span class="mx-4">{@current_user}</span>
         <.link
           href={~p"/logoff"}
           method="delete"

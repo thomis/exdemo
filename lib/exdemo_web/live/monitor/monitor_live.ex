@@ -20,7 +20,7 @@ defmodule ExdemoWeb.MonitorLive do
     socket =
       socket
       |> assign(:current_user, username)
-      |> assign(:users, [])
+      |> assign(:users, get_users())
       |> assign(:nodes, get_nodes())
       |> load_monitor_data()
       |> assign(:control, %{
@@ -42,12 +42,7 @@ defmodule ExdemoWeb.MonitorLive do
   end
 
   def handle_info(%{event: "presence_diff"}, socket) do
-    users =
-      ExdemoWeb.Presence.list("users_online")
-      |> Enum.map(fn {username_node, %{metas: metas}} -> "#{username_node} [#{length(metas)}]" end)
-      |> Enum.sort()
-
-    {:noreply, socket |> assign(:users, users)}
+    {:noreply, socket |> assign(:users, get_users())}
   end
 
   def handle_event("filter", %{"value" => value}, socket) do
@@ -98,6 +93,12 @@ defmodule ExdemoWeb.MonitorLive do
 
   defp get_nodes do
     [Node.self() | Node.list()]
+    |> Enum.sort()
+  end
+
+  defp get_users do
+    ExdemoWeb.Presence.list("users_online")
+    |> Enum.map(fn {username_node, %{metas: metas}} -> "#{username_node} [#{length(metas)}]" end)
     |> Enum.sort()
   end
 end
