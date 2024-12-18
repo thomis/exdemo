@@ -5,8 +5,8 @@ To start your Phoenix server:
   > * Install asdf: https://asdf-vm.com/guide/getting-started.html
   > * `asdf plugin add erlang`
   > * `asdf plugin add elixir`
-  > * `asdf install erlang 27.2` or find out latest version by `asdf latest erlang`
-  > * `asdf install elixir elixir 1.17.3-otp-27` or find out latest version with `asdf latest elixir`
+  > * `asdf install erlang 27.2` or find latest version with `asdf latest erlang`
+  > * `asdf install elixir elixir 1.17.3-otp-27` or find latest version with `asdf latest elixir`
   * cd into exdemo folder
   * Run `mix setup` to install and setup dependencies
   * Start Phoenix endpoint with `mix phx.server` or `iex -S mix phx.server` to get interactive shell
