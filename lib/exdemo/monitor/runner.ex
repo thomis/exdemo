@@ -112,7 +112,7 @@ defmodule Exdemo.Monitor.Runner do
     GenServer.call({:global, __MODULE__}, :state, :infinity)
   end
 
-  def is_running do
+  def running? do
     case :global.whereis_name(__MODULE__) do
       nil -> false
       _ -> true

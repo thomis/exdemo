@@ -1,4 +1,7 @@
 defmodule Exdemo.NodeMonitor.Runner do
+  @moduledoc """
+    Module responsible to monitor nodes and start/monitor Monitor.Runner process
+  """
   use GenServer
 
   def start_link(_args) do

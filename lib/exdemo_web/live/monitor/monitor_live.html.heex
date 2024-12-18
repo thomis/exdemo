@@ -6,7 +6,7 @@
   <ExdemoWeb.MonitorComponents.control control={@control} />
 </div>
 
-<div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 mt-4 text-slate-700">
+<div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 mt-4 text-slate-700 pb-10">
   <ExdemoWeb.MonitorComponents.summary summary={@summary} />
   <%= if @control.show_users do %>
     <ExdemoWeb.MonitorComponents.users users={@users} />

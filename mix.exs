@@ -4,7 +4,7 @@ defmodule Exdemo.MixProject do
   def project do
     [
       app: :exdemo,
-      version: "0.1.0",
+      version: "0.2.0",
       elixir: "~> 1.14",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
@@ -61,7 +61,9 @@ defmodule Exdemo.MixProject do
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.1.1"},
       {:bandit, "~> 1.5"},
-      {:libcluster, "~> 3.3"}
+      {:libcluster, "~> 3.3"},
+      # Static code analysis tool
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false}
     ]
   end
 

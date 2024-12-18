@@ -78,7 +78,7 @@ defmodule ExdemoWeb.MonitorLive do
   end
 
   defp load_monitor_data(socket) do
-    if Exdemo.Monitor.Runner.is_running() == true do
+    if Exdemo.Monitor.Runner.running?() == true do
       state = Exdemo.Monitor.Runner.get_state()
 
       socket

@@ -1,11 +1,12 @@
 <div class="grid place-items-center">
   <div class="border rounded-md shadow-lg w-96 h-72 p-5">
     <.form
+      for={}
       class="flex flex-col justify-around gap-12 h-full"
       phx-submit="register"
       action={~p"/register"}
     >
-      <div class="text-lg font-bold text-center">Register New User</div>
+      <div class="text-lg font-bold text-center">Register User</div>
       <div class="relative">
         <span class="text-[0.7rem] absolute -top-5 left-0 text-slate-500">
           Please provide a user name

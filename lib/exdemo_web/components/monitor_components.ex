@@ -1,4 +1,8 @@
 defmodule ExdemoWeb.MonitorComponents do
+  @moduledoc """
+    Module with user interface monitoring components
+  """
+
   use Phoenix.Component
 
   attr :nodes, :list, doc: "A list of node names"

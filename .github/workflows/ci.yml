@@ -29,3 +29,5 @@ jobs:
       - run: mix test
 
       - run: mix format --check-formatted
+
+      - run: mix credo
