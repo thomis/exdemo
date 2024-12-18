@@ -1,7 +1,7 @@
 # Exdemo
 
 To start your Phoenix server:
-  * Install Erlang/Elixir via asdf or try to use
+  * Install Erlang/Elixir via asdf
   > * Install asdf: https://asdf-vm.com/guide/getting-started.html
   > * `asdf plugin add erlang`
   > * `asdf plugin add elixir`
