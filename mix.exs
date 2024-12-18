@@ -82,7 +82,8 @@ defmodule Exdemo.MixProject do
         "tailwind exdemo --minify",
         "esbuild exdemo --minify",
         "phx.digest"
-      ]
+      ],
+      ci: ["format", "credo"]
     ]
   end
 end
