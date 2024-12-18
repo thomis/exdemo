@@ -1,8 +1,20 @@
 defmodule ExdemoWeb.PageControllerTest do
   use ExdemoWeb.ConnCase
 
-  test "GET /", %{conn: conn} do
+  test "GET / - without registered user", %{conn: conn} do
     conn = get(conn, ~p"/")
-    assert html_response(conn, 200) =~ "Control Panel"
+
+    assert html_response(conn, 302) =~
+             "<html><body>You are being <a href=\"/logon\">redirected</a>.</body></html>"
+  end
+
+  test "GET / - with registered user", %{conn: conn} do
+    conn =
+      conn
+      |> Plug.Test.init_test_session(username: "whatever")
+      |> get(~p"/")
+
+    assert html_response(conn, 200) =~ "Monitor"
+    assert html_response(conn, 200) =~ "whatever"
   end
 end
