@@ -11,7 +11,7 @@ defmodule ExdemoWeb.PageControllerTest do
   test "GET / - with registered user", %{conn: conn} do
     conn =
       conn
-      |> Plug.Test.init_test_session(username: "whatever")
+      |> Plug.Test.init_test_session(username: "whatever", session_id: "whatever")
       |> get(~p"/")
 
     assert html_response(conn, 200) =~ "Monitor"

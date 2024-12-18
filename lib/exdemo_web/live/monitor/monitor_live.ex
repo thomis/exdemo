@@ -4,7 +4,7 @@ defmodule ExdemoWeb.MonitorLive do
   @filter_unhealthy ["warning", "critical", "muted"]
   @filter_all ["healthy", "warning", "critical", "muted"]
 
-  def mount(_params, %{"username" => username} = _args, socket) do
+  def mount(_params, %{"username" => username, "session_id" => session_id} = _args, socket) do
     if connected?(socket) do
       # subscribe to monitoring events
       Phoenix.PubSub.subscribe(Exdemo.PubSub, "monitor")
@@ -15,11 +15,15 @@ defmodule ExdemoWeb.MonitorLive do
       # register new user and subscribe to user related events
       ExdemoWeb.Presence.track(self(), "users_online", "#{username} (#{Node.self()})", %{})
       ExdemoWeb.Endpoint.subscribe("users_online")
+
+      # subscribe to logoff events of users
+      Phoenix.PubSub.subscribe(Exdemo.PubSub, "user")
     end
 
     socket =
       socket
       |> assign(:current_user, username)
+      |> assign(:session_id, session_id)
       |> assign(:users, get_users())
       |> assign(:nodes, get_nodes())
       |> load_monitor_data()
@@ -43,6 +47,14 @@ defmodule ExdemoWeb.MonitorLive do
 
   def handle_info(%{event: "presence_diff"}, socket) do
     {:noreply, socket |> assign(:users, get_users())}
+  end
+
+  def handle_info(%{event: "logoff", session_id: session_id}, socket) do
+    if session_id == socket.assigns.session_id do
+      {:noreply, redirect(socket, to: ~p"/logon")}
+    else
+      {:noreply, socket}
+    end
   end
 
   def handle_event("filter", %{"value" => value}, socket) do
