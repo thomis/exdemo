@@ -1,9 +1,15 @@
 # Exdemo
 
 To start your Phoenix server:
-
+  * Install Erlang/Elixir via asdf or try to use
+  > * Install asdf: https://asdf-vm.com/guide/getting-started.html
+  > * asdf plugin add erlang
+  > * asdf plugin add elixir
+  > * asdf install erlang 27.2
+  > * asdf install elixir elixir 1.17.3-otp-27
+  * cd into exdemo folder
   * Run `mix setup` to install and setup dependencies
-  * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
+  * Start Phoenix endpoint with `mix phx.server` or `iex -S mix phx.server` to get interactive shell
 
 Now you can visit [`localhost:3000`](http://localhost:3000) from your browser.
 
