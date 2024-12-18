@@ -1,0 +1,140 @@
+#!/usr/bin/env bash
+
+APP=exdemo
+USER=deploy
+KEEP_RELEASES=5
+
+# target
+case "$1" in
+  "prod")
+    SERVER=demo.ikey.ch
+    ;;
+  *)
+    echo "deploy utility"
+    echo ""
+    echo "./deploy prod            # takes latest available version"
+    echo "./deploy prod PATTERN    # takes latest version found where file PATTERN matches"
+    echo ""
+    echo "Available sites: prod"
+    echo ""
+    exit 1;;
+esac
+REMOTE=$USER@$SERVER
+
+# version
+case "$2" in
+  "")
+    VERSION=$(ls releases/*.gz | sort -rV | head -n 1 | grep -oE '[0-9]+.[0-9]+.[0-9]+')
+    ;;
+  *)
+    VERSION=$(ls releases/*.gz | sort -rV | grep -E $2 | head -n 1 | grep -oE '[0-9]+.[0-9]+.[0-9]+')
+    ;;
+esac
+
+if [[ -z $VERSION ]]
+then
+  echo "Unable to match file with given pattern [$2]"
+  echo ""
+  exit 1
+fi
+
+# start deploying
+echo "--------------------------------------------------------------------------------"
+echo "-- Deploying Version $VERSION to $SERVER ($1)"
+echo "--------------------------------------------------------------------------------"
+
+
+for INSTANCE in "1" "2" "3"
+do
+
+# folder strucutre
+ssh -T $REMOTE <<COMMAND
+  echo "Instance $INSTANCE - Verify folder structure..."
+  mkdir -p  /apps/$APP$INSTANCE/releases/${VERSION}_tmp
+  mkdir -p  /apps/$APP$INSTANCE/shared/logs
+  mkdir -p  /apps/$APP$INSTANCE/shared/data
+  mkdir -p  /apps/$APP$INSTANCE/shared/config
+COMMAND
+
+# get remote PID
+pid=$(ssh -T $REMOTE "sudo systemctl show -p MainPID --value $APP$INSTANCE 2> /dev/null")
+
+# uploading
+echo "Instance $INSTANCE - Uploading release..."
+scp releases/$APP-$VERSION.tar.gz $REMOTE:/apps/$APP$INSTANCE/releases/${VERSION}_tmp
+ssh -T $REMOTE <<COMMAND
+  echo "Instance $INSTANCE - Unpacking release..."
+  cd /apps/$APP$INSTANCE/releases/${VERSION}_tmp
+  tar zxf $APP-$VERSION.tar.gz
+  rm $APP-$VERSION.tar.gz
+
+  # create symlinks
+  echo "Instance $INSTANCE - Symlinking folders..."
+  ln -sf /apps/$APP$INSTANCE/shared/config
+  ln -sf /apps/$APP$INSTANCE/shared/logs
+  ln -sf /apps/$APP$INSTANCE/shared/data
+
+  # stop previous app and remove current
+  echo "Instance $INSTANCE - Stopping existing application (pid $pid)..."
+  cd /apps/$APP$INSTANCE/current
+
+  sudo systemctl stop $APP$INSTANCE.service
+  sleep 2
+  while [ -f /proc/\$pid/status ]
+  do
+    echo "waiting..."
+    sleep 1
+  done
+  rm /apps/$APP$INSTANCE/current
+  echo "Instance $INSTANCE - Existing application has been stopped"
+  sleep 2
+
+  # delete existing version if same version deployment
+  cd /apps/$APP$INSTANCE/releases
+  if [[ -d $VERSION ]]
+  then
+    echo "Instance $INSTANCE - Deleting existing version as it is same version deployment..."
+    rm -rf $VERSION
+  fi
+  mv ${VERSION}_tmp $VERSION
+
+  # Symlinking and migrate
+  cd /apps/$APP$INSTANCE
+  ln -sf /apps/$APP$INSTANCE/releases/$VERSION current
+  echo "Instance $INSTANCE - Migrating database..."
+  # cd /apps/$APP$INSTANCE/current
+  # bin/$APP eval "Vbc.Release.migrate"
+COMMAND
+
+ssh -T $REMOTE <<COMMAND
+  echo "Instance $INSTANCE - Starting application..."
+  sudo systemctl start $APP$INSTANCE.service
+COMMAND
+
+while [ -z "$(ssh -T $REMOTE "sudo systemctl show -p MainPID --value $APP$INSTANCE 2> /dev/null")" ]
+do
+  echo "Instance $INSTANCE - waiting..."
+  sleep 1
+done
+echo "Instance $INSTANCE - Application (pid $(ssh -T $REMOTE "sudo systemctl show -p MainPID --value $APP$INSTANCE 2> /dev/null")) has been started"
+
+ssh -T $REMOTE <<COMMAND
+  echo "Instance $INSTANCE - Cleaning releases..."
+  cd /apps/$APP$INSTANCE/releases
+  while [ \$(ls | wc -l) -gt $KEEP_RELEASES ]
+  do
+    name=\$(ls | sort -rV | tail -n 1)
+    echo "  deleting release folder \$name..."
+    rm -rf \$name
+  done
+COMMAND
+
+if [ "$INSTANCE" != "3" ]; then
+  echo "Wait 10s before deploying next instance..."
+  sleep 10
+fi
+
+done
+
+echo "Deployment completed"
+echo ""

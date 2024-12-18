@@ -8,6 +8,7 @@ defmodule ExdemoWeb.Router do
     plug :put_root_layout, html: {ExdemoWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug ExdemoWeb.Authentication
   end
 
   pipeline :api do
@@ -17,29 +18,25 @@ defmodule ExdemoWeb.Router do
   scope "/", ExdemoWeb do
     pipe_through :browser
 
-    # get "/", PageController, :home
-    live "/", TaskLive, :index
+    get "/logon", SessionController, :logon
+    get "/register", SessionController, :register
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", ExdemoWeb do
-  #   pipe_through :api
-  # end
+  scope "/", ExdemoWeb do
+    pipe_through [:browser, :requires_registered_user]
 
-  # Enable LiveDashboard and Swoosh mailbox preview in development
-  if Application.compile_env(:exdemo, :dev_routes) do
-    # If you want to use the LiveDashboard in production, you should put
-    # it behind authentication and allow only admins to access it.
-    # If your application does not have an admins-only section yet,
-    # you can use Plug.BasicAuth to set up some basic authentication
-    # as long as you are also using SSL (which you should anyway).
+    live "/", MonitorLive, :index
+
+    delete "/logoff", SessionController, :logoff
+
     import Phoenix.LiveDashboard.Router
+    live_dashboard "/dashboard", metrics: ExdemoWeb.Telemetry
 
-    scope "/" do
-      pipe_through :browser
+    # Catch-all route for undefined routes
+    match :*, "/*path", SessionController, :not_found
+  end
 
-      live_dashboard "/dashboard", metrics: ExdemoWeb.Telemetry
-      forward "/mailbox", Plug.Swoosh.MailboxPreview
-    end
+  defp requires_registered_user(conn, opts) do
+    ExdemoWeb.Authentication.registered_user(conn, opts)
   end
 end

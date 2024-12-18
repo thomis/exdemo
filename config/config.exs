@@ -14,12 +14,26 @@ config :exdemo,
 config :exdemo, ExdemoWeb.Endpoint,
   url: [host: "localhost"],
   adapter: Bandit.PhoenixAdapter,
+  adapter: Phoenix.PubSub.PG2,
   render_errors: [
     formats: [html: ExdemoWeb.ErrorHTML, json: ExdemoWeb.ErrorJSON],
     layout: false
   ],
   pubsub_server: Exdemo.PubSub,
   live_view: [signing_salt: "IXPQ/Smc"]
+
+config :exdemo, Exdemo.PubSub, adapter: Phoenix.PubSub.PG2
+
+config :libcluster,
+  topologies: [
+    exdemo: [
+      strategy: Cluster.Strategy.Epmd,
+      config: [
+        # Update this to match your container setup
+        hosts: [:exdemo1@localhost, :exdemo2@localhost, :exdemo3@localhost]
+      ]
+    ]
+  ]
 
 # Configures the mailer
 #

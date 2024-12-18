@@ -1,16 +1,25 @@
-<header class="px-4 sm:px-6 lg:px-8 bg-slate-200 shadow-md text-lg">
-  <div class="flex items-center justify-between py-3">
-    <div class="flex items-center gap-4 text-lg">
-      <a href="/">ExDemo</a>
+<header class="px-4 sm:px-6 lg:px-8 bg-slate-200 shadow-md text-lg fixed z-20 w-full h-12">
+  <div class="flex items-center justify-between">
+    <div class="flex items-center text-lg">
+      <a class="flex gap-2 mr-5" href="/">
+        <img src={~p"/images/icon.svg"} /> ExDemo
+      </a>
+      <a class="px-5 h-12 hover:bg-slate-300 flex items-center" href={~p"/"}>
+        Monitor
+      </a>
     </div>
-    <div class="flex items-center gap-4 leading-6">
-      <a href="/dashboard" target="_blank" title="Phoenix LiveDashboard">
+    <div class="flex items-center leading-6">
+      <a
+        class="px-5 h-12 hover:bg-slate-300 flex items-center"
+        href="/dashboard"
+        target="_blank"
+        title="Phoenix LiveDashboard"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"
           height="16"
           fill="currentColor"
-          class="bi bi-speedometer"
           viewBox="0 0 16 16"
         >
           <path d="M8 2a.5.5 0 0 1 .5.5V4a.5.5 0 0 1-1 0V2.5A.5.5 0 0 1 8 2M3.732 3.732a.5.5 0 0 1 .707 0l.915.914a.5.5 0 1 1-.708.708l-.914-.915a.5.5 0 0 1 0-.707M2 8a.5.5 0 0 1 .5-.5h1.586a.5.5 0 0 1 0 1H2.5A.5.5 0 0 1 2 8m9.5 0a.5.5 0 0 1 .5-.5h1.5a.5.5 0 0 1 0 1H12a.5.5 0 0 1-.5-.5m.754-4.246a.39.39 0 0 0-.527-.02L7.547 7.31A.91.91 0 1 0 8.85 8.569l3.434-4.297a.39.39 0 0 0-.029-.518z" />
@@ -20,23 +29,46 @@
           />
         </svg>
       </a>
-      <a href="https://github.com/thomis/exdemo" target="_blank" title="Github Repository">
+      <a
+        class="px-5 h-12 hover:bg-slate-300 flex items-center"
+        href="https://github.com/thomis/exdemo"
+        target="_blank"
+        title="Github Repository"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"
           height="16"
-          fill="currentColor"
           class="bi bi-github"
           viewBox="0 0 16 16"
         >
           <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8" />
         </svg>
       </a>
-      <span>Thomi</span>
+      <%= if @current_user do %>
+        <span class="mx-5">{@current_user}</span>
+        <.link
+          href={~p"/logoff"}
+          method="delete"
+          class="px-5 h-12 hover:bg-slate-300 flex items-center"
+          title="Logoff"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            viewBox="0 0 16 16"
+          >
+            <path d="M8.5 10c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1" />
+            <path d="M10.828.122A.5.5 0 0 1 11 .5V1h.5A1.5 1.5 0 0 1 13 2.5V15h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3V1.5a.5.5 0 0 1 .43-.495l7-1a.5.5 0 0 1 .398.117M11.5 2H11v13h1V2.5a.5.5 0 0 0-.5-.5M4 1.934V15h6V1.077z" />
+          </svg>
+        </.link>
+      <% end %>
     </div>
   </div>
 </header>
-<main class="px-4 py-6 sm:px-6 lg:px-8">
+<main class="px-4 py-6 sm:px-6 lg:px-8 pt-20">
   <div class="mx-auto">
     <.flash_group flash={@flash} />
     {@inner_content}

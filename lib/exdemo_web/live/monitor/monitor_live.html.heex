@@ -1,0 +1,19 @@
+<p class="text-center text-4xl font-thin w-full">Monitor</p>
+<ExdemoWeb.MonitorComponents.nodes nodes={@nodes} />
+
+<div class="flex items-center justify-between">
+  <span class="text-sm text-slate-400">{@last_updated} UTC</span>
+  <ExdemoWeb.MonitorComponents.control control={@control} />
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 mt-4 text-slate-700">
+  <ExdemoWeb.MonitorComponents.summary summary={@summary} />
+  <%= if @control.show_users do %>
+    <ExdemoWeb.MonitorComponents.users users={@users} />
+  <% end %>
+  <%= for component <- @components do %>
+    <%= if Enum.member?(@control.filter, component.state) do %>
+      <ExdemoWeb.MonitorComponents.component component={component} />
+    <% end %>
+  <% end %>
+</div>

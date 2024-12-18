@@ -11,12 +11,16 @@ defmodule Exdemo.Application do
       ExdemoWeb.Telemetry,
       {DNSCluster, query: Application.get_env(:exdemo, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: Exdemo.PubSub},
+      ExdemoWeb.Presence,
       # Start the Finch HTTP client for sending emails
       {Finch, name: Exdemo.Finch},
       # Start a worker by calling: Exdemo.Worker.start_link(arg)
       # {Exdemo.Worker, arg},
       # Start to serve requests, typically the last entry
-      ExdemoWeb.Endpoint
+      ExdemoWeb.Endpoint,
+      {Cluster.Supervisor,
+       [Application.get_env(:libcluster, :topologies), [name: Cluster.Supervisor]]},
+      Exdemo.NodeMonitor.Runner
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
