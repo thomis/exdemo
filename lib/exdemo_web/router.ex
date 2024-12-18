@@ -19,7 +19,7 @@ defmodule ExdemoWeb.Router do
     pipe_through :browser
 
     get "/logon", SessionController, :logon
-    get "/register", SessionController, :register
+    post "/register", SessionController, :register
   end
 
   scope "/", ExdemoWeb do
