@@ -51,7 +51,7 @@ defmodule ExdemoWeb.MonitorLive do
 
   def handle_info(%{event: "logoff", session_id: session_id}, socket) do
     if session_id == socket.assigns.session_id do
-      {:noreply, redirect(socket, to: ~p"/logon")}
+      {:noreply, redirect(socket, to: ~p"/logoff")}
     else
       {:noreply, socket}
     end
