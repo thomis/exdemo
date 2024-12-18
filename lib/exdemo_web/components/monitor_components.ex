@@ -18,10 +18,7 @@ defmodule ExdemoWeb.MonitorComponents do
   def control(assigns) do
     ~H"""
     <div class="flex flex-wrap gap-1 justify-end">
-      <button
-        phx-click="show_users"
-        class={get_class_selected(@control.show_users , true)}
-      >
+      <button phx-click="show_users" class={get_class_selected(@control.show_users, true)}>
         users
       </button>
       <%= for state <- @control.all_states do %>
