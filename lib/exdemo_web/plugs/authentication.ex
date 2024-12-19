@@ -17,7 +17,7 @@ defmodule ExdemoWeb.Authentication do
 
   @doc false
   def registered_user(%{assigns: %{current_user: user}} = conn, _opts)
-      when is_binary(user) and user != "" do
+      when is_binary(user) do
     conn
   end
 
