@@ -112,7 +112,7 @@ defmodule ExdemoWeb.MonitorLive do
   defp get_nodes do
     [Node.self() | Node.list()]
     |> Enum.sort()
-    |> Enum.map(fn node -> String.split("#{node}", "@") |> List.first() end)
+    |> Enum.map(fn node -> node_prefix(node) end)
   end
 
   defp get_users do
@@ -125,6 +125,10 @@ defmodule ExdemoWeb.MonitorLive do
 
   defp nodes(metas) do
     metas
-    |> Enum.map_join(",", fn meta -> String.split("#{meta.node}", "@") |> List.first() end)
+    |> Enum.map_join(",", fn meta -> node_prefix(meta.node) end)
+  end
+
+  defp node_prefix(node) do
+    String.split("#{node}", "@") |> List.first()
   end
 end

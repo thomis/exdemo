@@ -11,7 +11,9 @@ defmodule ExdemoWeb.MonitorComponents do
     ~H"""
     <p class="font-thin w-full pb-4 text-slate-400 flex flex-row flex-wrap gap-x-3 gap-y-0 items-center justify-center">
       <%= for node <- @nodes do %>
-        <span class={if node == Node.self(), do: "text-green-600 font-medium"}>{node}</span>
+        <span class={if node == node_prefix(Node.self()), do: "text-green-600 font-medium"}>
+          {node}
+        </span>
       <% end %>
     </p>
     """
@@ -176,4 +178,8 @@ defmodule ExdemoWeb.MonitorComponents do
       "border border-slate-300 bg-gradient-to-b from-slate-200 to-slate-50 hover:from-slate-300 hover:to-slate-100 transition duration-200"
 
   defp get_class(_), do: ""
+
+  defp node_prefix(node) do
+    String.split("#{node}", "@") |> List.first()
+  end
 end
