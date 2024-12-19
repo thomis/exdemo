@@ -8,7 +8,7 @@ defmodule ExdemoWeb.PageControllerTest do
              "<html><body>You are being <a href=\"/logon\">redirected</a>.</body></html>"
   end
 
-  test "GET / - with registered user", %{conn: conn} do
+  test "GET / - with registered user and session_id", %{conn: conn} do
     conn =
       conn
       |> Plug.Test.init_test_session(username: "whatever", session_id: "whatever")
@@ -16,5 +16,15 @@ defmodule ExdemoWeb.PageControllerTest do
 
     assert html_response(conn, 200) =~ "Monitor"
     assert html_response(conn, 200) =~ "whatever"
+  end
+
+  test "GET / - with registered user only (first implementation)", %{conn: conn} do
+    conn =
+      conn
+      |> Plug.Test.init_test_session(username: "whatever")
+      |> get(~p"/")
+
+    assert html_response(conn, 302) =~
+             "<html><body>You are being <a href=\"/logon\">redirected</a>.</body></html>"
   end
 end

@@ -4,7 +4,8 @@ defmodule ExdemoWeb.MonitorLive do
   @filter_unhealthy ["warning", "critical", "muted"]
   @filter_all ["healthy", "warning", "critical", "muted"]
 
-  def mount(_params, %{"username" => username, "session_id" => session_id} = _args, socket) do
+  def mount(_params, %{"username" => username, "session_id" => session_id} = _args, socket)
+      when is_binary(session_id) do
     if connected?(socket) do
       # subscribe to monitoring events
       Phoenix.PubSub.subscribe(Exdemo.PubSub, "monitor")
@@ -35,6 +36,11 @@ defmodule ExdemoWeb.MonitorLive do
       })
 
     {:ok, socket}
+  end
+
+  # handles access without session_id (initial implementation)
+  def mount(_params, %{"username" => _username} = _args, socket) do
+    {:ok, redirect(socket, to: ~p"/logon")}
   end
 
   def handle_info("monitor_update", socket) do
