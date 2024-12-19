@@ -14,7 +14,7 @@ defmodule ExdemoWeb.MonitorLive do
       Phoenix.PubSub.subscribe(Exdemo.PubSub, "node_monitor")
 
       # register new user and subscribe to user related events
-      ExdemoWeb.Presence.track(self(), "users_online", "#{username} (#{Node.self()})", %{})
+      ExdemoWeb.Presence.track(self(), "users_online", username, %{node: Node.self()})
       ExdemoWeb.Endpoint.subscribe("users_online")
 
       # subscribe to logoff events of users
@@ -112,11 +112,19 @@ defmodule ExdemoWeb.MonitorLive do
   defp get_nodes do
     [Node.self() | Node.list()]
     |> Enum.sort()
+    |> Enum.map(fn node -> String.split("#{node}", "@") |> List.first() end)
   end
 
   defp get_users do
     ExdemoWeb.Presence.list("users_online")
-    |> Enum.map(fn {username_node, %{metas: metas}} -> "#{username_node} [#{length(metas)}]" end)
+    |> Enum.map(fn {username, %{metas: metas}} ->
+      "#{username} [#{length(metas)}] (#{nodes(metas)})"
+    end)
     |> Enum.sort()
+  end
+
+  defp nodes(metas) do
+    metas
+    |> Enum.map_join(",", fn meta -> String.split("#{meta.node}", "@") |> List.first() end)
   end
 end
