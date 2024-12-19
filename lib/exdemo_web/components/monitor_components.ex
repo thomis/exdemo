@@ -90,7 +90,7 @@ defmodule ExdemoWeb.MonitorComponents do
     ~H"""
     <div class="rounded-md shadow-lg w-auto h-72 p-4 flex flex-col gap-5 border border-blue-300 bg-gradient-to-b from-blue-200 to-blue-50 hover:from-blue-300 hover:to-blue-100 transition duration-200">
       <div class="text-lg font-bold text-ellipsis text-blue-600">Users [{Enum.count(@users)}]</div>
-      <div class="grid grid-cols-2 gap-1 overflow-auto overscroll-none">
+      <div class="grid grid-cols-1 gap-1 overflow-auto overscroll-none">
         <%= for user <- @users do %>
           <span>{user}</span>
         <% end %>

@@ -125,7 +125,9 @@ defmodule ExdemoWeb.MonitorLive do
 
   defp nodes(metas) do
     metas
-    |> Enum.map_join(",", fn meta -> node_prefix(meta.node) end)
+    |> Enum.map(fn meta -> node_prefix(meta.node) end)
+    |> Enum.sort()
+    |> Enum.join(",")
   end
 
   defp node_prefix(node) do
