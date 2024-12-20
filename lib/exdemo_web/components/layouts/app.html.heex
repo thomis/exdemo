@@ -1,4 +1,4 @@
-<header class="px-4 sm:px-6 lg:px-8 bg-slate-200 shadow-md text-lg fixed z-20 w-full h-12">
+<header class="px-4 sm:px-6 lg:px-8 bg-blue-200 shadow-md text-lg fixed z-20 w-full h-12">
   <div class="flex items-center justify-between">
     <div class="flex items-center text-lg">
       <a class="flex gap-2 mr-5" href="/">
@@ -7,13 +7,13 @@
           ExDemo
         </span>
       </a>
-      <a class="px-5 h-12 hover:bg-slate-300 flex items-center" href={~p"/"}>
+      <a class="px-5 h-12 hover:bg-blue-300 flex items-center" href={~p"/"}>
         Monitor
       </a>
     </div>
     <div class="flex items-center leading-6">
       <a
-        class="px-5 h-12 hover:bg-slate-300 flex items-center"
+        class="px-5 h-12 hover:bg-blue-300 flex items-center"
         href="/dashboard"
         target="_blank"
         title="Phoenix LiveDashboard"
@@ -28,7 +28,7 @@
         </svg>
       </a>
       <a
-        class="px-5 h-12 hover:bg-slate-300 flex items-center"
+        class="px-5 h-12 hover:bg-blue-300 flex items-center"
         href="https://github.com/thomis/exdemo"
         target="_blank"
         title="Github Repository"
@@ -44,7 +44,7 @@
         </svg>
       </a>
       <a
-        class="px-5 h-12 hover:bg-slate-300 flex items-center"
+        class="px-5 h-12 hover:bg-blue-300 flex items-center"
         href="https://ikey.ch/articles/f811d909-11c3-43de-ad46-1e8f93255e1e"
         target="_blank"
         title="Documentation"
@@ -64,7 +64,7 @@
         <.link
           href={~p"/logoff"}
           method="delete"
-          class="px-5 h-12 hover:bg-slate-300 flex items-center"
+          class="px-5 h-12 hover:bg-blue-300 flex items-center"
           title="Logoff"
         >
           <svg
@@ -86,7 +86,7 @@
     {@inner_content}
   </div>
 </main>
-<footer class="bg-slate-800 text-slate-300 h-36 flex items-center justify-between px-4 py-6 sm:px-6 lg:px-8">
+<footer class="bg-slate-800 text-blue-200 h-36 flex items-center justify-between px-4 py-6 sm:px-6 lg:px-8">
   <span>ExDemo © {DateTime.utc_now() |> Calendar.strftime("%B %Y")}</span>
   <span>Version {Application.spec(:exdemo, :vsn)}</span>
 </footer>

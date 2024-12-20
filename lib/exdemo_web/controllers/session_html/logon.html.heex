@@ -1,5 +1,17 @@
-<div class="grid place-items-center">
-  <div class="border rounded-md shadow-lg w-96 h-72 p-5">
+<div class="grid place-items-center gap-16 my-10">
+  <div class="flex flex-col gap-2 items-center">
+    <p class="text-3xl font-light text-blue-500">
+      Experience the Power of Elixir, Phoenix, and LiveView
+    </p>
+    <p class="text-xl">
+      Delivering Real-Time Interactivity, Unmatched Scalability, and Lightning-Fast Performance.
+    </p>
+    <p class="text-xl">
+      Explore how cutting-edge technologies streamline development, boost efficiency, and create seamless, reactive user experiences.
+    </p>
+  </div>
+
+  <div class="border rounded-md shadow-lg w-96 h-72 p-5 bg-gradient-to-b from-blue-200 to-blue-50">
     <.form
       for={}
       class="flex flex-col justify-around gap-12 h-full"
@@ -12,13 +24,13 @@
           Please provide a user name
         </span>
         <input
-          class="rounded-md border-green-500 focus:border-green-500 focus:ring-2 focus:ring-green-500 h-9 w-full"
+          class="rounded-md border-blue-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 h-9 w-full"
           type="text"
           name="username"
           autofocus
         />
       </div>
-      <button class="border border-green-500 text-green-800 rounded-md px-auto py-auto h-9 bg-green-100 hover:bg-green-200">
+      <button class="border border-blue-500 text-blue-800 rounded-md px-auto py-auto h-9 bg-blue-100 hover:bg-blue-200">
         Register
       </button>
     </.form>
