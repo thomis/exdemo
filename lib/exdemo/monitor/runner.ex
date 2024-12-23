@@ -114,8 +114,8 @@ defmodule Exdemo.Monitor.Runner do
 
   def running? do
     case :global.whereis_name(__MODULE__) do
-      nil -> false
-      _ -> true
+      pid when is_pid(pid) -> true
+      :undefined -> false
     end
   end
 
