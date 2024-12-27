@@ -130,8 +130,8 @@ ssh -T $REMOTE <<COMMAND
 COMMAND
 
 if [ "$INSTANCE" != "3" ]; then
-  echo "Wait 10s before deploying next instance..."
-  sleep 10
+  echo "Wait 5s before deploying next instance..."
+  sleep 5
 fi
 
 done
