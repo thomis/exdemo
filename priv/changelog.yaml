@@ -25,12 +25,12 @@
 
 - title: "0.3.0 - 2024-12-18"
   text:
-    - "Force logoff of same session"
+    - "Force logoff same session"
 
 - title: "0.2.0 - 2024-12-18"
   text:
     - "Adding credo - Static code analysis"
-    - "Improce documentation"
+    - "Improve documentation"
     - "Small refactorings"
 
 - title: "0.1.0 - 2024-12-18"
