@@ -4,7 +4,7 @@ defmodule Exdemo.MixProject do
   def project do
     [
       app: :exdemo,
-      version: "0.8.0",
+      version: "0.9.0",
       elixir: "~> 1.14",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
@@ -65,7 +65,9 @@ defmodule Exdemo.MixProject do
       # Static code analysis tool
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       # Generates unique session ids
-      {:elixir_uuid, "~> 1.2"}
+      {:elixir_uuid, "~> 1.2"},
+      # yaml for changelog
+      {:yaml_elixir, "~> 2.11"}
     ]
   end
 

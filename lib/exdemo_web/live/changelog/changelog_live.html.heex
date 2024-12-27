@@ -1,0 +1,14 @@
+<p class="text-center text-4xl font-thin w-full">Changelog</p>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-4">
+  <%= for entry <- @changelog_entries do %>
+    <div class="border rounded-md p-5 flex flex-col bg-slate-50 hover:bg-slate-100">
+      <span class="font-semibold">{entry["title"]}</span>
+      <ul class="list-inside list-[square] text-slate-500">
+        <%= for item <- entry["text"] do %>
+          <li>{item}</li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+</div>

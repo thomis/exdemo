@@ -1,0 +1,38 @@
+- title: "0.9.0 - 2024-12-27"
+  text:
+    - "Have a changelog"
+    - "Upgrade dependencies"
+
+- title: "0.8.0 - 2024-12-20"
+  text:
+    - "Styling and add headline text"
+
+- title: "0.7.0 - 2024-12-20"
+  text:
+    - "Node and user visualization"
+
+- title: "0.6.0 - 2024-12-20"
+  text:
+    - "Styling and documentation link"
+
+- title: "0.5.0 - 2024-12-19"
+  text:
+    - "Upgrade to Elixir 1.18"
+
+- title: "0.4.0 - 2024-12-19"
+  text:
+    - "Fix issue with username only"
+
+- title: "0.3.0 - 2024-12-18"
+  text:
+    - "Force logoff of same session"
+
+- title: "0.2.0 - 2024-12-18"
+  text:
+    - "Adding credo - Static code analysis"
+    - "Improce documentation"
+    - "Small refactorings"
+
+- title: "0.1.0 - 2024-12-18"
+  text:
+    - "First demo version"

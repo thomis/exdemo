@@ -26,6 +26,7 @@ defmodule ExdemoWeb.Router do
     pipe_through [:browser, :requires_registered_user]
 
     live "/", MonitorLive, :index
+    live "/changelog", ChangelogLive, :index
 
     delete "/logoff", SessionController, :logoff
 
