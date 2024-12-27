@@ -18,3 +18,14 @@ config :logger, level: :info
 
 # Runtime production configuration, including reading
 # of environment variables, is done on config/runtime.exs.
+
+config :libcluster,
+  topologies: [
+    exdemo: [
+      strategy: Cluster.Strategy.Epmd,
+      config: [
+        # Update this to match your container setup
+        hosts: [:exdemo1@localhost, :exdemo2@localhost, :exdemo3@localhost]
+      ]
+    ]
+  ]

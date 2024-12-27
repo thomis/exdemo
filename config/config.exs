@@ -25,15 +25,7 @@ config :exdemo, ExdemoWeb.Endpoint,
 config :exdemo, Exdemo.PubSub, adapter: Phoenix.PubSub.PG2
 
 config :libcluster,
-  topologies: [
-    exdemo: [
-      strategy: Cluster.Strategy.Epmd,
-      config: [
-        # Update this to match your container setup
-        hosts: [:exdemo1@localhost, :exdemo2@localhost, :exdemo3@localhost]
-      ]
-    ]
-  ]
+  topologies: []
 
 # Configures the mailer
 #
