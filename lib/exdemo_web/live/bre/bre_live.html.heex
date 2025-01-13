@@ -1,0 +1,47 @@
+<p class="text-center text-4xl font-thin w-full mb-4">Business Rule Engine - Use Cases</p>
+
+<div class="grid grid-rows-2 grid-flow-col grid-cols-[20%_1fr] gap-4 min-h-[80dvh]">
+  <div class="border border-slate-500 rounded-md p-5 bg-slate-100 row-span-2">
+    <div phx-window-keyup="key_left" phx-key="ArrowLeft" />
+    <div phx-window-keyup="key_right" phx-key="ArrowRight" />
+    <p class="font-bold text-lg mb-3">Use Cases</p>
+    <%= for {category, items} <- Enum.group_by(@use_cases, fn uc -> uc.category end) do %>
+      <p class="font-bold mb-2">{category}</p>
+      <ul class="list-inside list-[square] text-slate-500">
+        <%= for item <- items do %>
+          <li
+            class={[
+              "hover:bg-blue-200 px-2 py-2 my-1 border-slate-500 cursor-pointer",
+              @index == item.id && "hover:bg-blue-300 bg-blue-300"
+            ]}
+            phx-click="show"
+            phx-value-index={item.id}
+          >
+            {item.name}
+          </li>
+        <% end %>
+      </ul>
+      <div class="mb-2" />
+    <% end %>
+  </div>
+  <div class="border border-slate-500 rounded-md p-5 bg-slate-100 col-span-5 flex flex-col h-full">
+    <form phx-change="calculate">
+      <p class="font-bold text-lg mb-3">Request</p>
+      <textarea
+        class="w-full max-h-full flex-1 rounded-md p-3 border-slate-300 active:border-slate-300 focus:border-slate-300 focus:ring-0 font-mono text-sm shadow-inner"
+        name="request"
+        rows="12"
+        phx-phx-debounce="400"
+      >{@request}</textarea>
+    </form>
+  </div>
+  <div class="border border-slate-500 rounded-md p-5 bg-slate-100 col-span-5 flex flex-col h-full">
+    <p class="font-bold text-lg mb-3">Result</p>
+    <div
+      class="w-full h-full flex-1 bg-black text-white rounded-md p-3 border-black font-mono text-sm"
+      rows="10"
+    >
+      {raw(@result)}
+    </div>
+  </div>
+</div>
