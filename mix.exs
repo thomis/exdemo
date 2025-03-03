@@ -53,7 +53,7 @@ defmodule Exdemo.MixProject do
        app: false,
        compile: false,
        depth: 1},
-      {:swoosh, "~> 1.17.10"},
+      {:swoosh, "~> 1.18.0"},
       {:finch, "~> 0.13"},
       {:telemetry_metrics, "~> 1.1"},
       {:telemetry_poller, "~> 1.0"},
